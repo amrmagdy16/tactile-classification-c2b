@@ -1,2 +1,2 @@
-# tactile-classification-c2b
-Mechanical-Response Tactile Classification (Deformation & Shear)
+# Subgroup C2b: Tactile Material Classification (Deformation \& Shear)
+
