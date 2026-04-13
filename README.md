@@ -1,4 +1,4 @@
-# Subgroup C2b: Tactile Material Classification (Deformation \& Shear)
+# Assignment C2b: Tactile Material Classification from Deformation and Shear Modalities (REAL-SENSOR)
 
 ## What to do: Develop AI models for material classification using the mechanical-response modalities of the tactile sensor, namely deformation and shear.
 1) Prepare datasets based on deformation and shear data
