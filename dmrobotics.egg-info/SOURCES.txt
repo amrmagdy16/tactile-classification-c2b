@@ -1,0 +1,16 @@
+MANIFEST.in
+README.md
+setup.py
+dmrobotics/CameraDeviceManager.py
+dmrobotics/__init__.py
+dmrobotics/dmSDK.py
+dmrobotics.egg-info/PKG-INFO
+dmrobotics.egg-info/SOURCES.txt
+dmrobotics.egg-info/dependency_links.txt
+dmrobotics.egg-info/requires.txt
+dmrobotics.egg-info/top_level.txt
+dmrobotics/Daimon/__init__.py
+dmrobotics/Daimon/py310/linux_x86_64/pyarmor_runtime.so
+dmrobotics/Daimon/py311/linux_x86_64/pyarmor_runtime.so
+dmrobotics/Daimon/py38/linux_x86_64/pyarmor_runtime.so
+dmrobotics/Daimon/py39/linux_x86_64/pyarmor_runtime.so

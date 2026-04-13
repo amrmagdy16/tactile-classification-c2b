@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: dmrobotics
+Version: 0.1.4
+Summary: Tactile sensor interface for Daimon Robotics.
+Home-page: UNKNOWN
+Author: Yipai Du
+Author-email: yipai.du@outlook.com
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.8, <=3.11
+
+UNKNOWN
+

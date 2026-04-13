@@ -1,0 +1,5 @@
+numpy>=1.21,<=1.26, 
+opencv-contrib-python>=4.6.0.66,<=4.11.0.84, 
+scipy>=1.7.3,<=1.15.3,
+setuptools>=45.2.0,<=80.1.0, 
+cupy-cuda11x>=11.0.0,  # depending on your cuda version 
