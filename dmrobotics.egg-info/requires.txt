@@ -1,0 +1,8 @@
+cupy-cuda11x>=11.0.0
+numpy<=1.26,>=1.21
+opencv-contrib-python<=4.11.0.84,>=4.6.0.66
+scipy<=1.15.3,>=1.7.3
+setuptools<=80.1.0,>=45.2.0
+
+[:platform_system == "Linux"]
+pyudev
