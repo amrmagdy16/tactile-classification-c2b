@@ -27,3 +27,5 @@ Deliverables: Prepared dataset for deformation and shear modalities, trained mat
 
 ## Run
     python main.py
+# Baxter:
+Fork and use -> https://github.com/giangalv/baxter_rosbridge_adapter, follow the README. 
