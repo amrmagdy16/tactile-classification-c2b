@@ -1,0 +1,46 @@
+{
+  "sensor": {
+    "serial_id": "S2508080042",
+    "sampling_freq_hz": 120,
+    "sensor_area_mm": [16, 12],
+    "sensor_resolution": [320, 240],
+    "reset_interval_trials": 20
+  },
+  "baxter": {
+    "host": "130.251.13.31",
+    "port": 9090,
+    "gripper_id": 65538,
+    "arm_pose": "LEFT_TABLE_LOW",
+    "arm_joint_positions": [-0.55, -0.95, 0.10, 1.70, 0.00, 1.05, 0.00],
+    "arm_joint_names": ["left_s0", "left_s1", "left_e0", "left_e1", "left_w0", "left_w1", "left_w2"]
+  },
+  "baseline_protocol": {
+    "grip_open_position": 100.0,
+    "grip_closed_position": 96.0,
+    "closing_velocity_mm_s": 25,
+    "hold_time_s": 1.0,
+    "inter_trial_pause_s": 2.0,
+    "trials_per_material": 50,
+    "frames_per_trial": 150,
+    "contact_threshold": 0.3
+  },
+  "variation_protocol": {
+    "selected_materials": ["steel", "hardwood", "eva_foam", "soft_silicone", "cotton"],
+    "grip_closure_values_mm": [1.0, 2.0, 3.0],
+    "angle_values_deg": [-10, 0, 10],
+    "velocity_values_mm_s": [10, 25, 50],
+    "trials_per_variation": 20
+  },
+  "materials": [
+    "steel", "aluminium", "hardwood", "acrylic", "ceramic",
+    "softwood", "hard_rubber", "pla_solid", "pla_low_infill", "cardboard",
+    "eva_foam", "neoprene", "silicone_firm", "cork", "leather",
+    "silicone_soft", "sponge", "gel_pad", "rubber_eraser", "memory_foam",
+    "cotton", "denim", "felt", "bubble_wrap"
+  ],
+  "data": {
+    "save_dir": "data/raw",
+    "downsample_spatial": true,
+    "downsample_factor": 8
+  }
+}

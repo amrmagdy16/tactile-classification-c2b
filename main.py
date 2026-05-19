@@ -4,7 +4,7 @@ import numpy as np
 from dmrobotics import Sensor, put_arrows_on_image
 
 if __name__ == "__main__":
-    dev_serial_id =  "S2508080079" #"M2505150237" To be changed deppend on the port
+    dev_serial_id =  "S2508080069" #"M2505150237" To be changed deppend on the port
     sensor = Sensor(dev_serial_id)  # serial IDS
     frame_num = 0.0
     start_time = time.time()
