@@ -1,0 +1,33 @@
+================================================================
+HONEST ATTENTION CNN-LSTM (val-based early stop) condition=airhold  device=cuda
+================================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 200  video shape: (50, 4, 30, 40)
+Early stopping on INTERNAL VALIDATION split (test fold never used for selection)
+
+  Fold 1: train=94.5%  val=71.9%  test=80.0%
+  Fold 2: train=98.4%  val=81.2%  test=75.0%
+  Fold 3: train=98.4%  val=81.2%  test=90.0%
+  Fold 4: train=96.9%  val=81.2%  test=80.0%
+  Fold 5: train=92.2%  val=78.1%  test=72.5%
+
+----------------------------------------------------------------
+Mean TEST  (5-fold): 79.5% (+/- 6.0%)   <- HONEST held-out
+Mean VAL:   78.8%
+Mean TRAIN: 96.1%   train-test gap: +16.6%
+
+--- Aggregated confusion matrix (honest test predictions) ---
+   actual/pred carton_bo ceramic_c  hardwood  pla_hard  pla_soft plastic_o plastic_s    rubber steel_cup    wallet
+    carton_box        10         0         0         0         2         0         0         2         1         5
+   ceramic_cup         0        17         2         0         0         1         0         0         0         0
+      hardwood         1         0        15         2         0         0         0         0         0         2
+      pla_hard         0         0         0        18         0         0         0         0         0         2
+      pla_soft         0         0         0         1        17         0         0         0         0         2
+plastic_orange         0         1         0         0         0        17         1         0         1         0
+plastic_strawb         0         0         0         0         0         2        18         0         0         0
+        rubber         2         0         1         1         1         0         0        14         1         0
+     steel_cup         0         1         0         1         0         1         0         0        17         0
+        wallet         2         0         1         0         0         0         0         1         0        16
+
+Saved notes_2/attention_honest_airhold.json
+================================================================

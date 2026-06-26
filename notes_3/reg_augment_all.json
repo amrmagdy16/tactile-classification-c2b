@@ -1,0 +1,8 @@
+{
+  "variant": "augment",
+  "condition": "all",
+  "mean_test": 0.74,
+  "std_test": 0.08817596044274198,
+  "mean_train": 0.90078125,
+  "gap": 0.16078125
+}

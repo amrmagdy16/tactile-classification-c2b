@@ -1,0 +1,8 @@
+{
+  "variant": "labelsmooth",
+  "condition": "all",
+  "mean_test": 0.8275,
+  "std_test": 0.044300112866673375,
+  "mean_train": 0.9515625,
+  "gap": 0.12406249999999996
+}

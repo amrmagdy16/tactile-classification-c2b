@@ -1,0 +1,33 @@
+================================================================
+HONEST ATTENTION CNN-LSTM (val-based early stop) condition=press  device=cuda
+================================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 200  video shape: (50, 4, 30, 40)
+Early stopping on INTERNAL VALIDATION split (test fold never used for selection)
+
+  Fold 1: train=89.8%  val=87.5%  test=75.0%
+  Fold 2: train=93.0%  val=84.4%  test=80.0%
+  Fold 3: train=96.9%  val=87.5%  test=82.5%
+  Fold 4: train=93.8%  val=93.8%  test=82.5%
+  Fold 5: train=90.6%  val=87.5%  test=82.5%
+
+----------------------------------------------------------------
+Mean TEST  (5-fold): 80.5% (+/- 2.9%)   <- HONEST held-out
+Mean VAL:   88.1%
+Mean TRAIN: 92.8%   train-test gap: +12.3%
+
+--- Aggregated confusion matrix (honest test predictions) ---
+   actual/pred carton_bo ceramic_c  hardwood  pla_hard  pla_soft plastic_o plastic_s    rubber steel_cup    wallet
+    carton_box        17         0         2         1         0         0         0         0         0         0
+   ceramic_cup         1        11         0         0         0         0         3         0         5         0
+      hardwood         3         0        13         1         1         2         0         0         0         0
+      pla_hard         0         0         1        16         2         1         0         0         0         0
+      pla_soft         1         0         1         0        14         0         0         0         0         4
+plastic_orange         0         0         0         1         0        18         0         0         1         0
+plastic_strawb         0         0         0         0         0         1        19         0         0         0
+        rubber         1         0         0         0         0         0         1        18         0         0
+     steel_cup         0         2         0         0         0         0         0         0        18         0
+        wallet         0         0         0         0         2         0         0         1         0        17
+
+Saved notes_2/attention_honest_press.json
+================================================================

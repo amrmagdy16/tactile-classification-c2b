@@ -1,0 +1,25 @@
+{
+  "models": {
+    "SVM (RBF)": {
+      "mean": 0.8400000000000001,
+      "std": 0.09695359714832658
+    },
+    "Random Forest": {
+      "mean": 0.78,
+      "std": 0.10295630140987003
+    },
+    "XGBoost": {
+      "mean": 0.76,
+      "std": 0.06633249580710798
+    }
+  },
+  "material_classes": [
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "steel_cup"
+  ],
+  "n_samples": 100,
+  "n_features": 30
+}

@@ -1,0 +1,8 @@
+{
+  "variant": "weightdecay",
+  "condition": "all",
+  "mean_test": 0.7975,
+  "std_test": 0.045000000000000005,
+  "mean_train": 0.92421875,
+  "gap": 0.12671875
+}

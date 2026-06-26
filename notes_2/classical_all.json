@@ -1,0 +1,30 @@
+{
+  "condition": "all",
+  "materials": [
+    "carton_box",
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "plastic_orange",
+    "plastic_strawberry",
+    "rubber",
+    "steel_cup",
+    "wallet"
+  ],
+  "n": 400,
+  "top_features": [
+    "def_spread_y",
+    "shear_spread_y",
+    "ratio",
+    "def_mean",
+    "def_cx",
+    "def_peak",
+    "def_area",
+    "def_concentration",
+    "def_std",
+    "def_spread_x",
+    "shear_ecc",
+    "shear_spread_x"
+  ]
+}

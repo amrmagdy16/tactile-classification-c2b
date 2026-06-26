@@ -1,0 +1,18 @@
+{
+  "variant": "combined_ls_wd",
+  "condition": "all",
+  "label_smoothing": 0.1,
+  "weight_decay": 0.001,
+  "mean_test": 0.805,
+  "std_test": 0.062048368229954284,
+  "mean_val": 0.828125,
+  "mean_train": 0.9453125,
+  "gap": 0.14031249999999995,
+  "fold_test": [
+    0.8875,
+    0.8375,
+    0.7875,
+    0.7,
+    0.8125
+  ]
+}

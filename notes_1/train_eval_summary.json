@@ -1,0 +1,16 @@
+{
+  "materials": [
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "soft_bottle",
+    "steel_cup"
+  ],
+  "conditions": [
+    "baseline",
+    "hard_press",
+    "soft_press"
+  ],
+  "baseline_trials": 120
+}

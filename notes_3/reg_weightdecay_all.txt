@@ -1,0 +1,18 @@
+================================================================
+[3/5 WEIGHTDECAY] honest attention  condition=all  device=cuda
+================================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 400  shape: (50, 4, 30, 40)
+
+  Fold 1: train=96.1%  val=79.7%  test=85.0%
+  Fold 2: train=92.2%  val=81.2%  test=83.8%
+  Fold 3: train=80.1%  val=75.0%  test=72.5%
+  Fold 4: train=98.4%  val=87.5%  test=77.5%
+  Fold 5: train=95.3%  val=81.2%  test=80.0%
+
+----------------------------------------------------------------
+Mean TEST: 79.8% (+/- 4.5%)
+Mean TRAIN: 92.4%   gap: +12.7%
+[compare to honest baseline ~79% test, +14% gap]
+Saved notes_3/reg_weightdecay_all.json
+================================================================

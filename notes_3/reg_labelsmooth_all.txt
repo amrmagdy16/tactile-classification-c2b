@@ -1,0 +1,18 @@
+================================================================
+[2/5 LABELSMOOTH] honest attention  condition=all  device=cuda
+================================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 400  shape: (50, 4, 30, 40)
+
+  Fold 1: train=93.0%  val=81.2%  test=88.8%
+  Fold 2: train=88.7%  val=84.4%  test=82.5%
+  Fold 3: train=98.0%  val=81.2%  test=86.2%
+  Fold 4: train=97.7%  val=87.5%  test=76.2%
+  Fold 5: train=98.4%  val=82.8%  test=80.0%
+
+----------------------------------------------------------------
+Mean TEST: 82.8% (+/- 4.4%)
+Mean TRAIN: 95.2%   gap: +12.4%
+[compare to honest baseline ~79% test, +14% gap]
+Saved notes_3/reg_labelsmooth_all.json
+================================================================

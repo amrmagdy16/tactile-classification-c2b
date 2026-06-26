@@ -1,0 +1,20 @@
+{
+  "condition": "airhold",
+  "materials": [
+    "carton_box",
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "plastic_orange",
+    "plastic_strawberry",
+    "rubber",
+    "soft_bottle",
+    "steel_cup",
+    "wallet"
+  ],
+  "mean_test": 0.7772727272727272,
+  "std_test": 0.0564076074817766,
+  "mean_train": 0.7784090909090909,
+  "n": 220
+}

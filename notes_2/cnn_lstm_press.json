@@ -1,0 +1,19 @@
+{
+  "condition": "press",
+  "materials": [
+    "carton_box",
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "plastic_orange",
+    "plastic_strawberry",
+    "rubber",
+    "steel_cup",
+    "wallet"
+  ],
+  "mean_test": 0.765,
+  "std_test": 0.08,
+  "mean_train": 0.7475,
+  "n": 200
+}

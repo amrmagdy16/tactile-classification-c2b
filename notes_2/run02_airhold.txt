@@ -1,0 +1,15 @@
+============================================================
+ATTENTION CNN-LSTM (CV) data_2, condition=airhold  device=cuda
+============================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 200  video shape: (50, 4, 30, 40)
+  Fold 1: train=88.1% test=75.0%
+  Fold 2: train=93.8% test=87.5%
+  Fold 3: train=86.9% test=90.0%
+  Fold 4: train=93.8% test=92.5%
+  Fold 5: train=91.2% test=87.5%
+
+------------------------------------------------------------
+Mean TEST (5-fold): 86.5% (+/- 6.0%)
+Mean TRAIN: 90.8%   gap: +4.2%
+============================================================

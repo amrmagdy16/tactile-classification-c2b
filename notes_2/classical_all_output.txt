@@ -1,0 +1,65 @@
+================================================================
+CLASSICAL SVM vs RF (data_2, condition=all)
+================================================================
+
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 400  Features: 30  Folds: 5
+
+--- 5-fold CV (ALL features) ---
+  SVM             : 71.0% (+/- 3.7%)
+  Random Forest   : 70.0% (+/- 4.1%)
+
+--- Feature-group ablation (5-fold) ---
+  group                                    SVM              RF
+  Magnitude only                  42.8%+/-4.3%    41.0%+/-8.4%
+  Shape only                      26.2%+/-6.4%    24.2%+/-3.9%
+  Spatial only                    65.5%+/-3.9%    66.2%+/-6.0%
+  Mag+Shape                       38.8%+/-5.9%    41.2%+/-6.4%
+  ALL                             71.0%+/-3.7%    70.0%+/-4.1%
+
+--- Modality ablation Task 5 (5-fold) ---
+  Deformation only     SVM 62.0%+/-5.9%   RF 66.5%+/-3.7%
+  Shear only           SVM 55.5%+/-5.9%   RF 51.7%+/-4.7%
+  Both fused           SVM 71.0%+/-3.7%   RF 70.0%+/-4.1%
+
+--- SVM confusion matrix (30% holdout, acc 67.5%) ---
+   actual/pred carton_bo ceramic_c  hardwood  pla_hard  pla_soft plastic_o plastic_s    rubber steel_cup    wallet
+    carton_box        10         1         1         0         0         0         0         0         0         0
+   ceramic_cup         0         9         1         0         0         0         1         0         1         0
+      hardwood         2         0         6         3         0         0         0         0         0         1
+      pla_hard         1         0         1         8         2         0         0         0         0         0
+      pla_soft         2         0         1         1         6         0         0         1         0         1
+plastic_orange         0         2         0         0         0         5         4         0         1         0
+plastic_strawb         0         0         0         0         0         1        10         1         0         0
+        rubber         2         0         0         0         0         0         0         8         0         2
+     steel_cup         0         1         0         0         0         0         0         0        11         0
+        wallet         0         0         2         1         0         0         0         1         0         8
+
+--- Random Forest confusion matrix (30% holdout, acc 64.2%) ---
+   actual/pred carton_bo ceramic_c  hardwood  pla_hard  pla_soft plastic_o plastic_s    rubber steel_cup    wallet
+    carton_box         7         0         3         0         0         0         0         0         1         1
+   ceramic_cup         0         8         1         0         0         0         0         0         3         0
+      hardwood         1         1         6         3         0         1         0         0         0         0
+      pla_hard         0         0         0        10         1         1         0         0         0         0
+      pla_soft         3         1         1         0         5         0         0         0         0         2
+plastic_orange         1         0         0         0         0         8         1         0         2         0
+plastic_strawb         3         0         0         0         0         2         7         0         0         0
+        rubber         1         0         1         0         0         0         1         8         0         1
+     steel_cup         0         0         0         0         0         0         1         0        11         0
+        wallet         1         0         2         2         0         0         0         0         0         7
+
+--- RF top 12 feature importances ---
+   1. def_spread_y       0.071 ##############
+   2. shear_spread_y     0.049 #########
+   3. ratio              0.048 #########
+   4. def_mean           0.047 #########
+   5. def_cx             0.046 #########
+   6. def_peak           0.043 ########
+   7. def_area           0.041 ########
+   8. def_concentration  0.041 ########
+   9. def_std            0.040 ########
+  10. def_spread_x       0.038 #######
+  11. shear_ecc          0.036 #######
+  12. shear_spread_x     0.035 #######
+
+Saved notes_2/classical_all.json

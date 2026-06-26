@@ -1,0 +1,33 @@
+================================================================
+HONEST ATTENTION CNN-LSTM (val-based early stop) condition=all  device=cuda
+================================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 400  video shape: (50, 4, 30, 40)
+Early stopping on INTERNAL VALIDATION split (test fold never used for selection)
+
+  Fold 1: train=91.8%  val=76.6%  test=83.8%
+  Fold 2: train=94.1%  val=81.2%  test=85.0%
+  Fold 3: train=89.5%  val=79.7%  test=80.0%
+  Fold 4: train=98.0%  val=87.5%  test=80.0%
+  Fold 5: train=92.6%  val=84.4%  test=67.5%
+
+----------------------------------------------------------------
+Mean TEST  (5-fold): 79.2% (+/- 6.2%)   <- HONEST held-out
+Mean VAL:   81.9%
+Mean TRAIN: 93.2%   train-test gap: +14.0%
+
+--- Aggregated confusion matrix (honest test predictions) ---
+   actual/pred carton_bo ceramic_c  hardwood  pla_hard  pla_soft plastic_o plastic_s    rubber steel_cup    wallet
+    carton_box        27         1         5         2         2         0         0         2         0         1
+   ceramic_cup         0        29         0         0         0         2         0         0         9         0
+      hardwood         7         0        23         8         1         0         0         1         0         0
+      pla_hard         0         0         3        36         0         1         0         0         0         0
+      pla_soft         2         0         0         0        31         0         0         2         0         5
+plastic_orange         0         3         0         0         0        36         0         0         0         1
+plastic_strawb         0         0         0         0         0         4        36         0         0         0
+        rubber         4         0         2         0         0         0         0        31         0         3
+     steel_cup         0         1         0         0         0         1         1         0        37         0
+        wallet         1         0         0         0         6         0         0         2         0        31
+
+Saved notes_2/attention_honest_all.json
+================================================================

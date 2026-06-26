@@ -1,0 +1,32 @@
+{
+  "materials": [
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "steel_cup"
+  ],
+  "n_samples": 100,
+  "top_features": [
+    "def_peak_x",
+    "shear_cy",
+    "def_spread_x",
+    "load_slope",
+    "def_spread_y",
+    "def_area",
+    "def_concentration",
+    "def_cx",
+    "shear_cx",
+    "def_peak",
+    "shear_spread_y",
+    "def_peak_y"
+  ],
+  "SVM (RBF)": {
+    "cv_mean": 0.8400000000000001,
+    "cv_std": 0.09695359714832658
+  },
+  "Random Forest": {
+    "cv_mean": 0.78,
+    "cv_std": 0.10295630140987003
+  }
+}

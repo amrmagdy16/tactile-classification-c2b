@@ -1,0 +1,19 @@
+{
+  "condition": "all",
+  "materials": [
+    "carton_box",
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "plastic_orange",
+    "plastic_strawberry",
+    "rubber",
+    "steel_cup",
+    "wallet"
+  ],
+  "mean_test": 0.71,
+  "std_test": 0.06999999999999998,
+  "mean_train": 0.7187499999999999,
+  "n": 400
+}

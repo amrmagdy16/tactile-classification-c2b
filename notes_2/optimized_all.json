@@ -1,0 +1,38 @@
+{
+  "condition": "all",
+  "materials": [
+    "carton_box",
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "plastic_orange",
+    "plastic_strawberry",
+    "rubber",
+    "steel_cup",
+    "wallet"
+  ],
+  "selected": [
+    "def_peak",
+    "shear_peak",
+    "def_mean",
+    "shear_mean",
+    "def_std",
+    "shear_std",
+    "def_cx",
+    "def_spread_y",
+    "def_spread_x",
+    "def_area",
+    "def_peak_y",
+    "def_peak_x",
+    "def_concentration",
+    "shear_spread_y",
+    "shear_peak_y"
+  ],
+  "best_xgb": {
+    "learning_rate": 0.1,
+    "max_depth": 3,
+    "n_estimators": 200,
+    "subsample": 0.8
+  }
+}

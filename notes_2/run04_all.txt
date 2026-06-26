@@ -1,0 +1,15 @@
+============================================================
+DUAL-BRANCH CNN-LSTM (CV) data_2, condition=all  device=cuda
+============================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 400  video shape: (50, 4, 30, 40)
+  Fold 1: train=83.4% test=85.0%
+  Fold 2: train=98.1% test=90.0%
+  Fold 3: train=90.0% test=85.0%
+  Fold 4: train=96.6% test=77.5%
+  Fold 5: train=95.0% test=85.0%
+
+------------------------------------------------------------
+Mean TEST (5-fold): 84.5% (+/- 4.0%)
+Mean TRAIN: 92.6%   gap: +8.1%
+============================================================

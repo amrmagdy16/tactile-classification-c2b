@@ -1,31 +1,29 @@
-# Assignment C2b: Tactile Material Classification from Deformation and Shear Modalities (REAL-SENSOR)
+# Tactile Material Classification from Deformation & Shear (C2b)
 
-## What to do: Develop AI models for material classification using the mechanical-response modalities of the tactile sensor, namely deformation and shear.
-1) Prepare datasets based on deformation and shear data
-2) Train classification models for material recognition using these modalities
-3) Investigate suitable feature extraction or learning strategies for mechanical-response data
-4) Evaluate repeatability and sensitivity to variations in contact conditions
-5) Analyze the contribution of deformation and shear information to material discrimination
+**Research Track II · COGAR Assignment C2b · University of Genoa (DIBRIS)**
+Amr Magdy Mohamed Elsayed Abdalla (S8082888) · Gianluca Galvagni
 
-Software needed: Python, ROS2 (if sensor is integrated through ROS), NumPy, Pandas, scikit-learn, PyTorch or TensorFlow, Jupyter Notebook, signal processing and visualization libraries such as SciPy and Matplotlib
+Material classification from the **mechanical-response** modalities of a vision-based
+tactile sensor — deformation and shear — without using vision.
 
-Research needed: Mechanical-response sensing in tactile systems, deformation and shear feature extraction, learning strategies for non-image tactile data, sensitivity analysis under varying contact conditions, material discrimination from force and deformation patterns
+## Research question
 
-Deliverables: Prepared dataset for deformation and shear modalities, trained material classification models, evaluation of repeatability and sensitivity, and analysis of the contribution of mechanical-response signals
+> Does fusing deformation and shear improve material-classification accuracy over
+> either modality alone, and how robustly does that advantage hold as contact
+> conditions vary?
 
-# Starting point:
-## Interface for Daimon tactile sensor
+## Headline results (10 materials, honest leakage-free evaluation)
 
-# How to use
+| Finding | Result |
+|---|---|
+| Spatial footprint vs. raw magnitude | **65.5%** vs. 42.8% — identity is geometric |
+| Fusion vs. best single modality | **+4 to +9 points** in every condition |
+| Temporal attention vs. classical ceiling | 71% → **~80%** honest held-out |
+| Best single configuration (label smoothing) | **82.8%** |
+| Reported result | **~80% ± 5–6%** on 10 materials |
+| Visually identical PLA cubes | **0 cross-confusions** — touch beats vision |
 
-## Work with Python 3.8/3.9/3.10/3.11. Make sure you have cuda toolkit 12.x installed, otherwise you might need to modify setup.py
+Accuracy is bounded by data quantity (hand-collected, ~20 trials/class), not by
+model capacity — shown by a nine-configuration regularization sweep.
 
-## Install the package
-    pip install .
-
-## Plug in the sensor
-
-## Run
-    python main.py
-# Baxter:
-Fork and use -> https://github.com/giangalv/baxter_rosbridge_adapter, follow the README. 
+## Repository layout

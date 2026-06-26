@@ -181,3 +181,21 @@ cython_debug/
 .cursorindexingignore__pycache__/
 *.egg-info/
 *.deb
+
+# Raw datasets (kept local, not in repo)
+data_1/raw/
+data_2/raw/
+
+# Model binaries
+saved_models/
+models/
+
+# Build / env / scratch
+c2b_venv/
+build/
+*.aux
+*.log
+*.deb
+__pycache__/
+test_*.npy
+*.npy

@@ -1,0 +1,33 @@
+================================================================
+[COMBINED ls=0.1 wd=0.001] honest attention  condition=all  device=cuda
+================================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 400  shape: (50, 4, 30, 40)
+Regularizers: label_smoothing=0.1, weight_decay=0.001
+
+  Fold 1: train=99.6%  val=84.4%  test=88.8%
+  Fold 2: train=93.4%  val=81.2%  test=83.8%
+  Fold 3: train=89.8%  val=79.7%  test=78.8%
+  Fold 4: train=90.2%  val=81.2%  test=70.0%
+  Fold 5: train=99.6%  val=87.5%  test=81.2%
+
+----------------------------------------------------------------
+Mean TEST: 80.5% (+/- 6.2%)
+Mean TRAIN: 94.5%   gap: +14.0%
+[baseline 79.2% (+14.0%) | label-smooth 82.8% (+12.4%) | weight-decay 79.8% (+12.7%)]
+
+--- Aggregated confusion matrix (honest test predictions) ---
+   actual/pred carton_bo ceramic_c  hardwood  pla_hard  pla_soft plastic_o plastic_s    rubber steel_cup    wallet
+    carton_box        28         0         5         0         4         0         1         2         0         0
+   ceramic_cup         0        35         0         0         0         1         1         0         3         0
+      hardwood        12         1        21         4         0         1         0         0         0         1
+      pla_hard         0         0         2        37         0         1         0         0         0         0
+      pla_soft         0         0         2         2        29         0         0         2         0         5
+plastic_orange         0         2         0         0         0        38         0         0         0         0
+plastic_strawb         0         1         0         0         0         4        34         0         1         0
+        rubber         4         0         1         0         1         0         0        33         0         1
+     steel_cup         0         8         0         0         0         1         0         0        31         0
+        wallet         1         0         0         0         2         0         0         1         0        36
+
+Saved notes_3/reg_combined_all.json
+================================================================

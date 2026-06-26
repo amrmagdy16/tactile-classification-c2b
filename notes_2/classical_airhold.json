@@ -1,0 +1,30 @@
+{
+  "condition": "airhold",
+  "materials": [
+    "carton_box",
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "plastic_orange",
+    "plastic_strawberry",
+    "rubber",
+    "steel_cup",
+    "wallet"
+  ],
+  "n": 200,
+  "top_features": [
+    "def_spread_y",
+    "def_spread_x",
+    "def_mean",
+    "def_peak",
+    "def_cx",
+    "shear_spread_y",
+    "def_cy",
+    "shear_spread_x",
+    "def_concentration",
+    "def_area",
+    "shear_ecc",
+    "ratio"
+  ]
+}

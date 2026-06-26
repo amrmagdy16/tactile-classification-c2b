@@ -1,0 +1,14 @@
+{
+  "materials": [
+    "ceramic_cup",
+    "hardwood",
+    "pla_hard",
+    "pla_soft",
+    "soft_bottle",
+    "steel_cup"
+  ],
+  "mean_test_acc": 0.7916666666666667,
+  "std_test_acc": 0.11785113019775792,
+  "mean_train_acc": 0.725,
+  "n_samples": 120
+}

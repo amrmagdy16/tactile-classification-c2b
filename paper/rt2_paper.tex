@@ -1,0 +1,413 @@
+%% RT2 Final Paper — Tactile Material Classification from Deformation & Shear
+%% IEEE conference format (IEEEtran). Compile with pdflatex (x2) + bibtex if desired.
+%%
+%% NOTE TO AUTHOR (Amr): This paper is built on the RT2 method taught by
+%% Prof. Recchiuto (PICO research question; independent/dependent/control
+%% variables; careful baseline; multi-metric evaluation; figures with error
+%% bars). Verify section requirements against the actual RT2 rubric before
+%% submission. All numbers are the HONEST values from the project; do NOT
+%% replace them with the biased 85% or the discredited 0.85 JSON.
+
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+%% \usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Does Fusing Deformation and Shear Improve Tactile Material
+Classification? An Ablation Study under Contact-Condition Variability}
+
+\author{\IEEEauthorblockN{Amr Magdy Mohamed Elsayed Abdalla}
+\IEEEauthorblockA{\textit{DIBRIS, University of Genoa} \\
+Cognitive Architectures for Robotics (C2b)\\
+}
+\and
+\IEEEauthorblockN{PROFESSOR MASTROGIOVANNI FULVIO , Gianluca Galvagni}
+\IEEEauthorblockA{\textit{DIBRIS, University of Genoa}\\
+Genoa, Italy}
+}
+
+\maketitle
+
+\begin{abstract}
+Tactile sensing lets a robot identify what it touches from the mechanical
+response of the contact, independent of vision. We study whether \emph{fusing}
+the two channels of a vision-based tactile sensor---surface deformation and
+shear---improves material classification over either channel alone, and how
+robustly that advantage holds as contact conditions vary. Using a Daimon WS
+sensor we collected 10 materials under two contact modes (a controlled
+\emph{press} and a more variable \emph{airhold} squeeze), and compared classical
+classifiers and deep temporal models under a leakage-free, validation-based
+evaluation. Three findings emerge. First, the \emph{spatial} structure of the
+contact footprint dominates raw force magnitude (65.5\% vs.\ 42.8\% accuracy),
+confirming that material identity is encoded geometrically. Second, fusing
+deformation and shear beats the best single modality by 4--9 percentage points
+in every condition, because compliant and textured materials activate the shear
+channel. Third, a temporal self-attention model raises honest held-out accuracy
+from a $\sim$71\% classical ceiling to $\sim$80\%, while a controlled
+nine-configuration regularization sweep shows the residual train--test gap is
+driven by data quantity rather than model capacity. Visually identical PLA cubes
+of differing stiffness are separated by touch with near-zero cross-confusion. We
+report a reproducibility-bounded result of $\sim$80\%~$\pm$~5--6\% on 10
+materials and discuss the hand-collection force confound as the principal
+limitation.
+\end{abstract}
+
+\begin{IEEEkeywords}
+tactile sensing, material classification, deformation, shear, sensor fusion,
+temporal attention, robotic manipulation
+\end{IEEEkeywords}
+
+% =====================================================================
+\section{Introduction and Research Question}
+% =====================================================================
+Touch gives a robot information vision cannot: the mechanical response of a
+contact reveals stiffness, texture, and compliance even when two objects look
+identical. Vision-based tactile sensors expose this response as two physically
+distinct channels---\emph{deformation} (the normal/vertical displacement of a
+soft sensing surface, encoding contact geometry) and \emph{shear} (the
+lateral/tangential displacement, proportional to tangential force)
+\cite{gelsight}. A natural question for any fusion-based perception system is
+whether using both channels is worth the cost over using one.
+
+Following the PICO formulation for robotics research questions, we phrase our
+study as: \emph{Does fusing deformation and shear (intervention) improve
+material-classification accuracy (outcome) on a set of everyday rigid, compliant,
+and textured objects (population/context) compared to using either modality
+alone (baseline), and how does that advantage change as contact-condition
+variability increases?} This is testable, measurable (classification accuracy
+under cross-validation), controlled (same sensor, materials, and pipeline across
+conditions), and non-trivial (prior work has not run the controlled
+single-vs-fused comparison on this modality).
+
+We formalize three hypotheses:
+\begin{itemize}
+\item \textbf{H1}: fusion outperforms the best single modality at low contact
+variability;
+\item \textbf{H2}: the fused advantage persists, and is not eliminated, as
+contact variability grows;
+\item \textbf{H3}: each single modality fails on a physically predictable subset
+of materials, which fusion covers.
+\end{itemize}
+
+\noindent\textbf{Variables.} The \emph{independent} variables are the sensing
+modality (deformation-only / shear-only / fused), the feature representation
+(magnitude / shape / spatial), the model class (classical / temporal deep), and
+the contact condition (press / airhold). The \emph{dependent} variable is
+5-fold cross-validated classification accuracy (with per-class confusion and the
+train--test gap as secondary metrics). \emph{Control} variables are the sensor,
+the material set, the trial count, and the evaluation protocol, held fixed
+across comparisons.
+
+\noindent\textbf{Contributions.} (i) A controlled feature-group and modality
+ablation that isolates the contribution of spatial structure and of shear; (ii)
+a demonstration that temporal self-attention---not added model
+capacity---breaks the classical accuracy ceiling; (iii) an honest,
+reproducibility-bounded evaluation with a regularization sweep that diagnoses
+the residual generalization gap as data-limited; and (iv) a clear
+``touch-beats-vision'' result on visually identical objects.
+
+% =====================================================================
+\section{Literature Analysis}
+% =====================================================================
+Our study sits on a ladder of four works spanning sensing principles to the
+current state of the art.
+
+\textbf{Foundation.} GelSight \cite{gelsight} established the vision-based
+tactile paradigm: a camera images a soft elastomer whose vertical and lateral
+surface deformation encodes contact geometry, with marker-motion magnitude
+``roughly proportional to'' contact force and shear. It grounds our treatment of
+deformation and shear as the two physically meaningful channels and motivates
+modeling the temporal loading dynamics of a soft, viscoelastic contact.
+
+\textbf{Direct lab/pipeline precedent.} Amin, Gianoglio and Valle
+\cite{amin2023}, from the same institution on the same Baxter platform, perform
+embedded real-time object \emph{hardness} classification, comparing an SVM,
+single-layer feed-forward networks, and a CNN (CNN best, $>$98\%). Crucially
+their sensor is a \emph{PVDF piezoelectric pressure array}---not a
+deformation+shear field---and their features are the mean and standard deviation
+of each tactile frame. Our work mirrors their Baxter-mounted classical-plus-deep
+pipeline but differs in modality and, importantly, shows that the per-frame
+mean/std pooling they adopt discards exactly the spatial structure that we find
+carries material identity. (We note for accuracy that the ``170 trials'' in
+\cite{amin2023} refer to materials-machine compression ground-truthing, not
+tactile-dataset size.)
+
+\textbf{Sensor-specific reference.} Liao et al.\ \cite{liao2025} use the Daimon
+DM-Tac sensor---the same vendor family as ours---and decompose contact into
+normal and shear components, estimating fruit hardness from the
+\emph{dynamics of the normal force} ($\mathrm{d}F_z/\mathrm{d}t$,
+$\mathrm{d}F_z/\mathrm{d}\delta$). This validates our sensor lineage and supports
+modeling temporal loading dynamics rather than a single peak frame. Notably,
+\cite{liao2025} \emph{decomposes shear but uses only the normal force},
+motivating precisely the fusion question we test.
+
+\textbf{State-of-the-art ceiling.} FG-CLTP \cite{fgcltp2025} is a fine-grained
+contrastive language--tactile pretraining framework that aligns 3D tactile point
+clouds with quantitative contact-state descriptions, reporting 95.9\% accuracy
+on a 100k-pair dataset. Its central argument---that \emph{quantitative} contact
+states (force magnitude, contact geometry) carry more than qualitative texture
+descriptors, and that spatial 3D representations outperform image-only
+ones---directly supports our premise. It also delimits the resource frontier
+(data scale, 3D representation, pretraining) that our small single-sensor study
+does not reach, framing our future work.
+
+\textbf{Positioning.} Among these, ours is the only study that (a) uses
+deformation+shear as its explicit fused modality, (b) runs the controlled
+deformation/shear/fused ablation that none of the four perform, and (c) reports
+under an honest, reproducibility-bounded protocol. Where \cite{amin2023} averages
+the spatial field away and \cite{liao2025} discards shear, our contribution is to
+quantify what is recovered by keeping both.
+
+% =====================================================================
+\section{Methodological Proposal}
+% =====================================================================
+\subsection{Sensor and signals}
+We use a Daimon WS vision-based tactile sensor providing, per frame, a
+deformation field and a shear field, each a two-component vector map downsampled
+to $30\times40$. A trial is a temporal stack of such frames spanning approach,
+loading, hold, and release. Concatenating the two modalities yields a
+$(T,30,40,4)$ tensor per trial.
+
+\subsection{Feature representations (classical)}
+We extract a 30-dimensional feature set in four groups: \emph{magnitude}
+(peak, mean, std of the field), \emph{shape} (loading-curve descriptors),
+\emph{spatial-deformation} (centroid, spread, area, concentration of the
+deformation footprint), and \emph{spatial-shear} (the same for shear). The
+feature-group split lets us ablate which physical aspect of the contact carries
+identity.
+
+\subsection{Models}
+\emph{Classical}: SVM (RBF), Random Forest, and XGBoost on the 30 features.
+\emph{Deep, temporal}: a CNN encodes each frame; a bidirectional LSTM models the
+loading sequence; a temporal self-attention layer re-weights informative frames
+before a linear classifier. We additionally test a dual-branch variant that
+processes deformation and shear in separate streams, to isolate whether explicit
+modality separation helps.
+
+\subsection{Honest evaluation protocol}
+All accuracies are 5-fold cross-validated. For the deep models, early stopping
+uses an \emph{internal validation split carved from the training fold}; the test
+fold is never used for model selection. This removes the optimistic bias of
+selecting the epoch by test-fold accuracy and yields reviewer-proof numbers. We
+report mean accuracy, standard deviation across folds, the train--test gap, and
+the aggregated confusion matrix.
+
+% =====================================================================
+\section{Experiment Design}
+% =====================================================================
+\subsection{Materials and contact conditions}
+We collected 10 materials spanning rigid, compliant, and textured classes:
+carton box, ceramic cup, hardwood, two visually identical PLA cubes of differing
+stiffness (\texttt{pla\_hard}, \texttt{pla\_soft}), two textured plastics, rubber,
+steel cup, and a wallet. Each material was sampled under two contact conditions,
+which constitute our variability axis: \emph{press} (a controlled, consistent
+contact) and \emph{airhold} (the object squeezed against the sensor in the air,
+producing more variable contact and stronger shear). Twenty trials per material
+per condition were collected.
+
+\subsection{Collection constraint and its consequence}
+Robot access was limited, so data were hand-collected with a release-gated
+protocol guaranteeing one clean press per trial. This makes the applied force
+\emph{uncontrolled}, so force is partially confounded with material identity.
+This is the principal limitation of the study and is treated explicitly: results
+are validation-grade rather than force-controlled-deployment-grade. The two
+contact conditions are used precisely to probe robustness to this variability
+(H2).
+
+\subsection{Baseline}
+Per the RT2 methodology, the baseline is the ``most common solution'': a
+classical classifier on magnitude features (the mean/std-style representation of
+\cite{amin2023}) and a standard CNN-LSTM without temporal attention. The
+intervention (spatial features; modality fusion; temporal attention) is compared
+against these.
+
+% =====================================================================
+\section{Results and Visualization}
+% =====================================================================
+\subsection{Spatial structure dominates magnitude}
+A feature-group ablation (Table~\ref{tab:feat}) shows spatial features reach
+65.5\% on the pooled set versus 42.8\% for magnitude---a $\sim$1.5$\times$
+advantage, robust across conditions. Exploratory analysis
+(Fig.~\ref{fig:confound}) explains why: raw loading curves separate materials by
+force, but after per-trial normalization the curves partially collapse, leaving
+residual \emph{shape} differences as the discriminative signal. Per-material
+contact imprints (Fig.~\ref{fig:imprints}) are visibly distinct, confirming that
+identity is encoded geometrically.
+
+\begin{table}[t]
+\caption{Feature-group ablation (5-fold CV accuracy, SVM).}
+\label{tab:feat}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Group (dim) & press & airhold & all \\
+\midrule
+Magnitude (7) & 50.5 & 44.0 & 42.8 \\
+Shape (5) & 27.0 & 33.5 & 26.2 \\
+\textbf{Spatial (18)} & \textbf{68.5} & \textbf{67.0} & \textbf{65.5} \\
+ALL (30) & 74.5 & 72.5 & 71.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Fusion beats single modality (answer to the research question)}
+The modality ablation (Table~\ref{tab:mod}, Fig.~\ref{fig:modality}) confirms
+H1: fusing deformation and shear beats the best single modality by 4--9 points
+in every condition. H3 holds in the confusion structure: deformation struggles
+where stiffness is similar, shear is weak on smooth rigid items, and fusion
+covers both. Feature-importance analysis ranks the spatial spread of \emph{both}
+fields highest, and the shear channel---negligible on rigid pilot materials---
+becomes informative once compliant and textured materials are present
+(supporting H2).
+
+\begin{table}[t]
+\caption{Modality ablation (5-fold CV accuracy, SVM).}
+\label{tab:mod}
+\centering
+\begin{tabular}{lccc}
+\toprule
+Modality & press & airhold & all \\
+\midrule
+Deformation only & 67.5 & 68.0 & 62.0 \\
+Shear only & 65.5 & 62.5 & 55.5 \\
+\textbf{Fused} & \textbf{74.5} & \textbf{72.5} & \textbf{71.0} \\
+\midrule
+\emph{Gain over best single} & +7.0 & +4.5 & +9.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Temporal attention breaks the ceiling}
+Classical models and a baseline CNN-LSTM converge near 71\%. Temporal
+self-attention raises \emph{honest} held-out accuracy to $\sim$80\%
+(press 80.5\%, airhold 79.5\%, pooled 79.2\%). A dual-branch variant matches but
+does not exceed single-stream attention, isolating temporal attention---not
+added capacity or explicit modality separation---as the source of the gain
+(Fig.~\ref{fig:acc}).
+
+\subsection{The gap is data-limited (regularization sweep)}
+A nine-configuration sweep (Fig.~\ref{fig:reg}) finds that only gentle output
+regularization helps: label smoothing gives the best single result (82.8\%),
+weight decay helps marginally, while capacity reduction, temporal cropping, and
+augmentation are neutral or harmful. The train--test gap stays at +12--17\%
+under every intervention, and two runs of the identical architecture scored
+82.8\% and 77.0\%---a $\sim$6-point swing from random seed alone. We therefore
+report a reproducibility-bounded \textbf{$\sim$80\%~$\pm$~5--6\%} on 10
+materials, with 82.8\% as the best single configuration. The immovable gap is
+direct evidence that data quantity ($\sim$20 trials/class), not model capacity,
+is the binding constraint.
+
+\subsection{Touch beats vision}
+The two PLA cubes are visually indistinguishable yet differ in stiffness. In the
+honest confusion matrix (Fig.~\ref{fig:confusion}) they show near-zero
+cross-confusion---direct evidence that the mechanical-response modality
+discriminates what a camera cannot. Residual errors concentrate in
+physically similar pairs (the rigid-flat cluster; the two cups), confirming the
+classifier's mistakes track genuine material similarity.
+
+% ---- figure stubs: replace with generated PNGs in reports_2/figures ----
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{reports_2/figures/magnitude_confound_data2.png}
+\caption{Raw loading curves separate materials by force; normalized curves
+partially collapse, leaving shape as the discriminative signal.}
+\label{fig:confound}\end{figure}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{reports_2/figures/spatial_imprints_data2.png}
+\caption{Per-material contact imprints (onset/peak/release; press and airhold).
+Each material leaves a distinct spatial footprint.}
+\label{fig:imprints}\end{figure}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{reports_2/figures/modality_ablation.png}
+\caption{Modality ablation: fused deformation+shear beats either alone in every
+condition (annotated gain over best single modality).}
+\label{fig:modality}\end{figure}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{reports_2/figures/accuracy_comparison.png}
+\caption{Accuracy by model and condition under honest evaluation. Attention
+breaks the $\sim$71\% classical ceiling; label smoothing is best.}
+\label{fig:acc}\end{figure}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{reports_2/figures/regularization_sweep.png}
+\caption{Regularization sweep (10 materials, honest eval). Only gentle output
+regularization helps; the $\sim$80\%~$\pm$~5--6\% band is shaded.}
+\label{fig:reg}\end{figure}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{reports_2/figures/confusion_matrix_honest.png}
+\caption{Honest attention confusion matrix (pooled, 10 materials). The PLA pair
+shows near-zero cross-confusion---``touch beats vision''.}
+\label{fig:confusion}\end{figure}
+
+% =====================================================================
+\section{Discussion and Limitations}
+% =====================================================================
+\textbf{Answer to the research question.} Fusing deformation and shear improves
+material classification over either modality alone by 4--9 points (H1), the
+advantage persists across both contact conditions and is driven by compliant and
+textured materials activating shear (H2, H3). The underlying signal is
+\emph{spatial}: contact-footprint geometry, not raw force magnitude.
+
+\textbf{What attention adds, and what it does not.} Temporal self-attention
+recovers $\sim$9 points over the classical/baseline ceiling, showing the
+limitation there was partly temporal-modeling, not purely data. But the
+nine-configuration sweep shows the residual generalization gap is
+\emph{data-quantity-driven}: it is immovable by capacity reduction or
+augmentation, and only gentle output regularization helps marginally.
+
+\textbf{Limitations.} (1) \emph{Hand collection} leaves applied force confounded
+with material identity; this caps accuracy and is the dominant limitation.
+(2) \emph{Small data} ($\sim$20 trials/class) yields wide fold variance
+($\pm$5--6\%) and a $\sim$14\% train--test gap, motivating band-based reporting.
+(3) \emph{Tactile-specific augmentation constraint}: because the label is encoded
+in spatial geometry and magnitude, standard image augmentations (rotation,
+magnitude scaling, even $\pm$1\,px translation) corrupt the label and degrade
+accuracy---only temporal jitter and small sensor-scale noise are
+label-preserving. (4) \emph{Offline, single-sensor, single-operator}: no
+inter-session or on-robot deployment results yet.
+
+\textbf{Future work.} Constant-force robotic collection (removing the confound),
+more trials per class (closing the gap), an on-robot deployment/transfer test,
+and richer 3D representations or contrastive pretraining in the direction of
+\cite{fgcltp2025}.
+
+\textbf{Conclusion.} On 10 materials with a deformation+shear tactile sensor,
+fusing the two modalities and modeling the temporal loading dynamics with
+attention yields $\sim$80\%~$\pm$~5--6\% honest accuracy, separating even
+visually identical objects by touch. The result is a complete, self-aware answer
+to the research question, bounded by data scale rather than by method.
+
+% =====================================================================
+\section*{Reproducibility}
+Code, per-fold logs, and figure-generation scripts are in the project
+repository. Figures are regenerated from the dataset and result files;
+all reported numbers use the honest validation-based protocol.
+
+\begin{thebibliography}{00}
+\bibitem{gelsight} W.~Yuan, S.~Dong, and E.~H.~Adelson, ``GelSight:
+High-Resolution Robot Tactile Sensors for Estimating Geometry and Force,''
+\emph{Sensors}, vol.~17, no.~12, 2762, 2017.
+\bibitem{amin2023} Y.~Amin, C.~Gianoglio, and M.~Valle, ``Embedded real-time
+objects' hardness classification for robotic grippers,'' \emph{Future
+Generation Computer Systems}, vol.~148, pp.~211--224, 2023.
+\bibitem{liao2025} Z.~Liao, Y.~Du, J.~Duan, H.~Liang, and M.~Y.~Wang,
+``Quantitative Hardness Assessment with Vision-based Tactile Sensing for Fruit
+Classification and Grasping,'' 2025.
+\bibitem{fgcltp2025} W.~Ma, C.~Zhang, Y.~Cai, G.~Yao, S.~Cui, and S.~Wang,
+``FG-CLTP: Fine-Grained Contrastive Language Tactile Pretraining for Robotic
+Manipulation,'' 2025.
+\end{thebibliography}
+
+\end{document}

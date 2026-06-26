@@ -1,0 +1,19 @@
+================================================================
+[1b/5 AUGMENT-SAFE] honest attention  condition=all  device=cuda
+================================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 400  shape: (50, 4, 30, 40)
+Augmentations: temporal-shift(+/-3), gaussian-noise(0.015)
+
+  Fold 1: train=96.5%  val=81.2%  test=86.2%
+  Fold 2: train=97.7%  val=85.9%  test=80.0%
+  Fold 3: train=98.0%  val=82.8%  test=87.5%
+  Fold 4: train=82.4%  val=78.1%  test=65.0%
+  Fold 5: train=92.2%  val=82.8%  test=73.8%
+
+----------------------------------------------------------------
+Mean TEST: 78.5% (+/- 8.3%)
+Mean TRAIN: 93.4%   gap: +14.9%
+[compare to honest baseline 79.2% (+14%), label-smooth 82.8% (+12.4%)]
+Saved notes_3/reg_augment_safe_all.json
+================================================================

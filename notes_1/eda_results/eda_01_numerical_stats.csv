@@ -1,0 +1,8 @@
+,Peak_Def,Peak_Def,Peak_Shear,Peak_Shear,Def_Mean,Def_Mean,Shear_Mean,Shear_Mean,Def_Std,Def_Std,Ratio_Peak,Ratio_Peak
+,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std
+Material,,,,,,,,,,,,
+ceramic_cup,1.014,0.256,0.669,0.253,0.858,0.196,0.533,0.2,0.166,0.071,1.601,0.267
+hardwood,0.627,0.148,0.339,0.092,0.564,0.105,0.281,0.078,0.074,0.043,1.905,0.361
+pla_hard,0.784,0.223,0.46,0.215,0.69,0.194,0.352,0.169,0.102,0.052,1.893,0.563
+pla_soft,0.55,0.094,0.384,0.14,0.491,0.073,0.3,0.125,0.054,0.028,1.565,0.458
+steel_cup,0.717,0.141,0.339,0.11,0.639,0.118,0.258,0.072,0.084,0.036,2.223,0.505

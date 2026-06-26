@@ -1,0 +1,33 @@
+================================================================
+[COMBINED ls=0.1 wd=0.001] honest attention  condition=airhold  device=cuda
+================================================================
+Materials: ['carton_box', 'ceramic_cup', 'hardwood', 'pla_hard', 'pla_soft', 'plastic_orange', 'plastic_strawberry', 'rubber', 'steel_cup', 'wallet']
+Samples: 200  shape: (50, 4, 30, 40)
+Regularizers: label_smoothing=0.1, weight_decay=0.001
+
+  Fold 1: train=96.9%  val=81.2%  test=72.5%
+  Fold 2: train=89.1%  val=75.0%  test=67.5%
+  Fold 3: train=98.4%  val=81.2%  test=90.0%
+  Fold 4: train=99.2%  val=90.6%  test=87.5%
+  Fold 5: train=96.9%  val=78.1%  test=77.5%
+
+----------------------------------------------------------------
+Mean TEST: 79.0% (+/- 8.6%)
+Mean TRAIN: 96.1%   gap: +17.1%
+[baseline 79.2% (+14.0%) | label-smooth 82.8% (+12.4%) | weight-decay 79.8% (+12.7%)]
+
+--- Aggregated confusion matrix (honest test predictions) ---
+   actual/pred carton_bo ceramic_c  hardwood  pla_hard  pla_soft plastic_o plastic_s    rubber steel_cup    wallet
+    carton_box        13         0         3         0         0         1         0         2         1         0
+   ceramic_cup         0        18         0         0         0         2         0         0         0         0
+      hardwood         1         1        15         2         0         0         0         1         0         0
+      pla_hard         0         1         1        17         0         0         0         1         0         0
+      pla_soft         0         0         0         1        17         0         0         1         0         1
+plastic_orange         0         2         0         0         0        13         2         0         3         0
+plastic_strawb         0         0         0         0         0         2        18         0         0         0
+        rubber         2         0         1         0         0         0         0        16         0         1
+     steel_cup         0         1         1         0         0         2         0         0        16         0
+        wallet         1         0         2         1         1         0         0         0         0        15
+
+Saved notes_3/reg_combined_airhold.json
+================================================================

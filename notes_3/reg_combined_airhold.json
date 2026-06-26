@@ -1,0 +1,18 @@
+{
+  "variant": "combined_ls_wd",
+  "condition": "airhold",
+  "label_smoothing": 0.1,
+  "weight_decay": 0.001,
+  "mean_test": 0.7899999999999999,
+  "std_test": 0.08602325267042626,
+  "mean_val": 0.8125,
+  "mean_train": 0.9609375,
+  "gap": 0.17093750000000008,
+  "fold_test": [
+    0.725,
+    0.675,
+    0.9,
+    0.875,
+    0.775
+  ]
+}
